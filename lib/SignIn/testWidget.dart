@@ -1,104 +1,185 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
-class testWidget extends StatelessWidget {
-  const testWidget({
-    Key? key,
-  }) : super(key: key);
+class testWidget extends StatefulWidget {
+  const testWidget({Key? key}) : super(key: key);
 
   @override
+  _testWidgetState createState() => _testWidgetState();
+}
+
+class _testWidgetState extends State<testWidget> {
+  List<Widget> pages = [
+    Text("test"),
+    Text("123"),
+    Text("test"),
+    Text("test"),
+    Text("test")
+  ];
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("Home"),
-          ElevatedButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Row(
-                          children: [
-                            Text("Type smthng"),
-                            Transform.translate(
-                              offset: Offset(80, -20),
-                              child: IconButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  icon: Icon(Icons.close)),
-                            )
-                          ],
-                        ),
-                        content: Container(
-                          height: 150,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              TextFormField(
-                                decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    label: Text("type smtng")),
-                              ),
-                              Row(
-                                children: [
-                                  ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15)),
-                                          primary: Colors.red),
-                                      onPressed: () {
-                                        Fluttertoast.showToast(
-                                            msg: "This Fathi here :) ",
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.BOTTOM,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor: Colors.grey,
-                                            textColor: Colors.white,
-                                            fontSize: 16.0);
-                                      },
-                                      child: Text("Cancel")),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Get.snackbar(
-                                        "Pfe Islem",
-                                        "Snack Bar flutter",
-                                        icon: Icon(Icons.person,
-                                            color: Colors.white),
-                                        snackPosition: SnackPosition.BOTTOM,
-                                      );
-                                    },
-                                    child: Text("Confirm"),
-                                    style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15)),
-                                        primary: Colors.green),
-                                  ),
-                                ],
-                                mainAxisAlignment: MainAxisAlignment.center,
-                              )
-                            ],
-                          ),
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          width: double.infinity,
+          color: Colors.red,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 200,
+              ),
+              TextButton(onPressed: () {}, child: Text("Click")),
+              Expanded(
+                child: GridView.builder(
+                    itemCount: 10,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20),
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: 100,
+                          width: 100,
+                          color: Colors.green,
                         ),
                       );
-                    });
-              },
-              child: Text("Show alert"))
-        ],
+                    }),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
+
+/*children: pages.map((e) {
+            return e;
+          }).toList(),*/
+/* return Container(
+      width: double.infinity,
+      child: Container(
+        color: Colors.red,
+        child: ListView.builder(
+          itemCount: pages.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.green,
+                ),
+                child: ListTile(
+                  leading: Icon(Icons.add),
+                  trailing: IconButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text(
+                                  "You want to delete this item for sure ?"),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        pages.removeAt(index);
+                                      });
+                                      Navigator.pop(context);
+                                      print(pages.length);
+                                    },
+                                    child: Text("Yes i want !")),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("No , i don't "))
+                              ],
+                            );
+                          });
+                    },
+                    icon: Icon(Icons.delete),
+                  ),
+                  title: Text("this is the item number : ${index}"),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );*/
+/*   child: GridView(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                  ),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        color: Colors.green,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        color: Colors.green,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        color: Colors.green,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        color: Colors.green,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        color: Colors.green,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        color: Colors.green,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        color: Colors.green,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        color: Colors.green,
+                      ),
+                    ),
+                  ],
+                ),*/
